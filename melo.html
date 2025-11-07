@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QuickBiz Ad — Create & Share Business Ads</title>
+  <meta name="description" content="Create a quick advertisement for any business and share it by email." />
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#6ee7b7;
+      --muted:#94a3b8;
+      --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+      --max-width:1100px;
+      --gap:18px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(800px 400px at 10% 10%, rgba(110,231,183,0.06), transparent 8%),
+        linear-gradient(180deg,#061226 0%, #071029 100%);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:32px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      gap:24px;
+      font-size:16px;
+      line-height:1.35;
+    }
+
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+      display:grid;
+      grid-template-columns: 420px 1fr;
+      gap:var(--gap);
+      align-items:start;
+    }
+
+    /* left panel - form */
+    .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    h1{
+      margin:0 0 8px 0;
+      font-size:20px;
+      letter-spacing:-0.2px;
+    }
+    p.lead{
+      margin:0 0 18px 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    label{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+    .field{
+      margin-bottom:14px;
+    }
+    input[type="text"], input[type="email"], textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:10px;
+      border: none;
+      outline: none;
+      background:var(--glass);
+      color:inherit;
+      font-size:15px;
+    }
+    textarea{min-height:120px; resize:vertical}
+
+    .row{
+      display:flex;
+      gap:10px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      font-weight:600;
+      background:linear-gradient(90deg,var(--accent), #34d399);
+      color:#042018;
+      box-shadow: 0 6px 18px rgba(52,211,153,0.12);
+    }
+    .btn.secondary{
+      background:transparent;
+      color:var(--accent);
+      border:1px solid rgba(110,231,183,0.12);
+      font-weight:600;
+    }
+
+    .small{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    /* right panel - preview */
+    .preview-wrap{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      align-items:stretch;
+    }
+
+    .ad-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;
+      padding:18px;
+      border:1px solid rgba(255,255,255,0.03);
+      display:flex;
+      gap:14px;
+      align-items:stretch;
+      min-height:140px;
+    }
+    .ad-media{
+      width:140px;
+      height:110px;
+      border-radius:10px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      flex-shrink:0;
+    }
+    .ad-media img{width:100%; height:100%; object-fit:cover}
+
+    .ad-body{flex:1; display:flex; flex-direction:column; gap:8px}
+    .ad-title{font-size:18px; margin:0}
+    .ad-tagline{font-size:13px; color:var(--muted); margin:0}
+    .ad-cta{
+      margin-top:auto;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+
+    .meta{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .saved-list{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:6px;
+    }
+    .saved-item{
+      background:rgba(255,255,255,0.02);
+      padding:8px;
+      border-radius:8px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      font-size:13px;
+    }
+    .link{
+      color:var(--accent);
+      text-decoration:none;
+      cursor:pointer;
+    }
+
+    /* small screens */
+    @media (max-width:980px){
+      .container{grid-template-columns:1fr; padding-bottom:60px}
+      .ad-media{width:120px;height:90px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <section class="panel" aria-labelledby="create-title">
+      <h1 id="create-title">Create a quick advertisement</h1>
+      <p class="lead">Enter the business details and an email. We'll build a preview and let you share it by email or save it locally.</p>
+
+      <form id="adForm" autocomplete="off" novalidate>
+        <div class="field">
+          <label for="ownerEmail">Your email (recipient for the ad)</label>
+          <input id="ownerEmail" type="email" placeholder="you@business.com" required />
+        </div>
+
+        <div class="field">
+          <label for="bizName">Business name</label>
+          <input id="bizName" type="text" placeholder="e.g., Jojo's Bakery" required />
+        </div>
+
+        <div class="field">
+          <label for="tagline">Short tagline (one line)</label>
+          <input id="tagline" type="text" placeholder="Fresh bread baked daily" />
+        </div>
+
+        <div class="field">
+          <label for="desc">Short description (shown in ad)</label>
+          <textarea id="desc" placeholder="Describe your service/offering in 1–2 sentences"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="imageUrl">Image or logo URL (optional)</label>
+          <input id="imageUrl" type="text" placeholder="https://example.com/logo.jpg" />
+          <div class="small">Tip: paste a full image URL or leave empty to use a placeholder.</div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:12px;">
+          <button class="btn" id="createBtn" type="submit" title="Generate ad preview">Create Ad</button>
+          <button class="btn secondary" id="saveBtn" type="button" title="Save ad locally">Save Locally</button>
+          <button class="btn secondary" id="clearBtn" type="button" title="Clear form">Clear</button>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div class="small">Recent saved ads (in this browser):</div>
+          <div class="saved-list" id="savedList" aria-live="polite"></div>
+        </div>
+      </form>
+    </section>
+
+    <aside class="preview-wrap" aria-label="Advertisement preview">
+      <div class="ad-card" id="adPreview">
+        <div class="ad-media" id="adImage" aria-hidden="true">
+          <!-- image inserted by JS -->
+          <svg width="90" height="64" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.65">
+            <rect x="0.5" y="0.5" width="23" height="15" rx="3" stroke="rgba(255,255,255,0.06)" />
+            <path d="M3 12l4-5 3 4 4-6 7 9" stroke="rgba(255,255,255,0.06)" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+        <div class="ad-body">
+          <div>
+            <h2 class="ad-title" id="adTitle">Your business name</h2>
+            <div class="ad-tagline" id="adTag">Short tagline appears here</div>
+          </div>
+
+          <p id="adDesc" style="margin:6px 0 0 0;color:var(--muted);font-size:14px">Short description will show here when you create your ad.</p>
+
+          <div class="ad-cta">
+            <div class="meta" id="adMeta">No email set</div>
+            <div style="margin-left:auto;display:flex;gap:8px;">
+              <button class="btn" id="emailShareBtn" title="Share ad by email" disabled>Share by Email</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="padding:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong>Preview instructions</strong>
+          <span class="small">Works offline — no server required</span>
+        </div>
+        <p class="small" style="margin-top:8px">Fill the form to generate a preview. "Share by Email" will open your email client with a ready-to-send message addressed to the email you entered.</p>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          <button class="btn secondary" id="copyBtn" type="button">Copy Ad Text</button>
+          <button class="btn secondary" id="downloadBtn" type="button">Download HTML</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // Helper: simple validation
+    function isValidEmail(e){
+      if(!e) return false;
+      // simple RFC-like test
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.trim());
+    }
+
+    const form = document.getElementById('adForm');
+    const ownerEmail = document.getElementById('own
